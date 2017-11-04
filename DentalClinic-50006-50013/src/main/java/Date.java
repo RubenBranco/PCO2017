@@ -43,6 +43,10 @@ public class Date {
 		return other.day == day && other.month == month;
 	}
 	
+	public boolean isBefore(Date other) {
+		return this.year <= other.year && this.month <= other.month && this.day < other.day;
+	}
+
 	public boolean isHoliday() {
 		for (int i = 0; i < HOLIDAYS.length; i++) {
 			if (this.sameDay(HOLIDAYS[i])) return true;
@@ -102,6 +106,27 @@ public class Date {
 		return this.intValue();
 	}
 	
+	public int dayOfWeek() {
+		return (5 + this.daysSinceStartDate()) % 7;
+	}
 	
+	public int getMinute() {
+		return minute;
+	}
 	
+	public int getHour() {
+		return hour;
+	}
+	
+	public int getDay() {
+		return day;
+	}
+	
+	public int getMonth() {
+		return month;
+	}
+	
+	public int getYear() {
+		return year;
+	}
 }
