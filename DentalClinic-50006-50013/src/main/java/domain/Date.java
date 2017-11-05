@@ -1,3 +1,4 @@
+package domain;
 
 public class Date {
 	private int hour;
@@ -59,7 +60,7 @@ public class Date {
 		return false;
 	}
 	
-	private static int daysInMonth(int month, int year) {
+	public static int daysInMonth(int month, int year) {
 		if (month == 2) {
 			if (Date.isLeapYear(year)) {
 				return 28;
