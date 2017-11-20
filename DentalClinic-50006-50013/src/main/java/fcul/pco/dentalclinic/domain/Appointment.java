@@ -1,4 +1,4 @@
-package domain;
+package fcul.pco.dentalclinic.domain;
 
 public class Appointment {
 	private Date date;
@@ -25,7 +25,7 @@ public class Appointment {
 		int monthCache = date.getMonth();
 		int year = date.getYear();
 		while (daysElapsed > 0) {
-			if (daysElapsed + day > date.daysInMonth(month)) {
+			if (daysElapsed + day > Date.daysInMonth(month, year)) {
 				if (month + 1 > 12) {
 					month = 1;
 					year++;
@@ -41,4 +41,12 @@ public class Appointment {
 		}
 		return new Date(hour, minute, day, month, year);
 	}
+	@Override
+	public String toString(){
+		return date + "$" + duration + "$" + description;
+	}
+
+	public static Appointment fromString(String s) {
+	    String[] apt = s.split("$");
+    }
 }

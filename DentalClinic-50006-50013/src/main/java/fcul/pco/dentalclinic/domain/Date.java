@@ -1,4 +1,4 @@
-package domain;
+package fcul.pco.dentalclinic.domain;
 
 public class Date {
 	private int hour;
