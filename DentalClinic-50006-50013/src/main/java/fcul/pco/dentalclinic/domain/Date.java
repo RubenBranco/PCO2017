@@ -1,5 +1,9 @@
 package fcul.pco.dentalclinic.domain;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Date {
 	private int hour;
 	private int minute;
@@ -108,7 +112,7 @@ public class Date {
 	}
 	
 	public int dayOfWeek() {
-		return (5 + this.daysSinceStartDate()) % 7;
+		return (5 + this.daysSinceStartDate() / 1440) % 7;
 	}
 	
 	public int getMinute() {
@@ -129,5 +133,63 @@ public class Date {
 	
 	public int getYear() {
 		return year;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s/%s/%s@%d:%d", day, month, year, hour, minute);
+	}
+
+	public static Date incrementDate(Date d, int minutes) {
+		int minute = (d.getMinute() + minutes) % 60;
+		int hoursElapsed = (d.getMinute() + minutes) / 60;
+		int hour = (d.getHour() + hoursElapsed) % 24;
+		int daysElapsed = (d.getHour() + hoursElapsed) / 24;
+		int day = d.getDay();
+		int month = d.getMonth();
+		int year = d.getYear();
+		while (daysElapsed > 0) {
+			if (daysElapsed + day > Date.daysInMonth(month, year)) {
+				if (month + 1 > 12) {
+					month = 1;
+					year++;
+				}
+				else {
+					month++;
+				}
+				daysElapsed -= day;
+			}
+			else {
+				day += daysElapsed;
+			}
+		}
+		return new Date(hour, minute, day, month, year);
+	}
+
+	public static Date getCurrentDate() {
+		LocalDateTime now = LocalDateTime.now();
+		return new Date(now.getYear(), now.getMonthValue(), now.getDayOfMonth(), now.getHour(), now.getMinute());
+	}
+
+	public List<Date> makeSmartDateList(int every, List<Date> exclude) {
+		List<Date> smartDateList = new ArrayList<>();
+		smartDateList.add(this);
+		Date currentDate = this;
+		while (smartDateList.size() < 10) {
+			currentDate = Date.incrementDate(currentDate, every);
+		}
+		return smartDateList;
+	}
+
+	public static Date getTomorrowMorning() {
+		Date currentDate = Date.getCurrentDate();
+		return new Date(9, 0, currentDate.getDay() + 1, currentDate.getMonth(), currentDate.getYear());
+	}
+	public static Date fromString(String s){
+		String[] dmYear = s.split("/");
+		String[] hourMinute = s.split("@");
+		return new Date(Integer.parseInt(hourMinute[1].split(":")[0]),
+				Integer.parseInt(hourMinute[1].split(":")[1]), Integer.parseInt(dmYear[0])
+				, Integer.parseInt(dmYear[1]), Integer.parseInt(dmYear[2].split("@")[0]));
 	}
 }

@@ -10,12 +10,14 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class AgendaPersistence {
-    public static void save(Agenda a, Doctor d) throws IOException {
+    public static void save(Doctor d) throws IOException {
+        Agenda a = d.getAgenda();
         FileWriter saveFile = new FileWriter(ApplicationConfiguration.ROOT_DIRECTORY + d.getId());
-        ArrayList<Appointment> appointments = a.getAppointments();
+        List<Appointment> appointments = a.getAppointments();
         for (Appointment apt : appointments) {
             saveFile.write(apt.toString() + "\n");
         }

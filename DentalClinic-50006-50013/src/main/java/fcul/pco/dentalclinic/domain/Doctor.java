@@ -1,31 +1,15 @@
 package fcul.pco.dentalclinic.domain;
 
-public class Doctor {
-
-    private String name;
-    private int id;
+public class Doctor extends Person{
     private Agenda agenda;
 
     public Doctor(String name, int id, Agenda agenda) {
-        this.name = name;
-        this.id = id;
+        super(id, name);
         this.agenda = agenda;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Agenda getAgenda() {
         return agenda;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String toString() {
-        return String.format("%d,%s", id, name);
     }
 
     public static Doctor fromString(String s) {

@@ -1,12 +1,11 @@
 package fcul.pco.dentalclinic.domain;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class DoctorCatalog {
 
-    private TreeMap<Integer, Doctor> doctorCatalog;
+    private Map<Integer, Doctor> doctorCatalog;
     private static DoctorCatalog instance;
 
     private DoctorCatalog() {
@@ -46,15 +45,5 @@ public class DoctorCatalog {
         doctorCatalog = fcul.pco.dentalclinic.persistence.DoctorCatalog.load();
     }
 
-    @Override
-    public String toString() {
-        List<List<String>> table = new ArrayList<>();
-        for (Doctor d : doctorCatalog.values()) {
-            ArrayList<String> row = new ArrayList<>();
-            row.add(String.valueOf(d.getId()));
-            row.add(d.getName());
-            table.add(row);
-        }
-        return Utils.tableToString(table);
-    }
+
 }
