@@ -5,9 +5,10 @@ import fcul.pco.dentalclinic.persistence.AgendaPersistence;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class Agenda {
+public class Agenda implements Iterable<Appointment>{
     private List<Appointment> agenda;
 
     public Agenda() {
@@ -18,10 +19,9 @@ public class Agenda {
         agenda.add(a);
     }
 
-    public List<Appointment> getAppointments(){
-        return agenda;
+    public Iterator<Appointment> iterator() {
+        return agenda.iterator();
     }
-
     public void save(Doctor d) throws IOException {
         AgendaPersistence.save(d);
     }

@@ -177,10 +177,19 @@ public class Date {
 		Date currentDate = this;
 		while (smartDateList.size() < 10) {
 			currentDate = Date.incrementDate(currentDate, every);
+			if (!exclude.contains(currentDate) && !currentDate.isHoliday() && currentDate.dayOfWeek() != 5
+					&& currentDate.dayOfWeek() != 6 && currentDate.getHour() > 8 && currentDate.getHour() < 19 &&
+					currentDate.getHour() != 12 && currentDate.getHour() != 13) {
+				smartDateList.add(currentDate);
+			}
 		}
 		return smartDateList;
 	}
 
+	public boolean equals(Date other) {
+		return this.day == other.getDay() && this.month == other.getMonth() && this.year == other.getYear() &&
+				this.minute == other.getMinute() && this.hour == other.getHour();
+	}
 	public static Date getTomorrowMorning() {
 		Date currentDate = Date.getCurrentDate();
 		return new Date(9, 0, currentDate.getDay() + 1, currentDate.getMonth(), currentDate.getYear());
@@ -191,5 +200,9 @@ public class Date {
 		return new Date(Integer.parseInt(hourMinute[1].split(":")[0]),
 				Integer.parseInt(hourMinute[1].split(":")[1]), Integer.parseInt(dmYear[0])
 				, Integer.parseInt(dmYear[1]), Integer.parseInt(dmYear[2].split("@")[0]));
+	}
+
+	public static String dateListToString(List<Date> list) {
+		return "Test";
 	}
 }

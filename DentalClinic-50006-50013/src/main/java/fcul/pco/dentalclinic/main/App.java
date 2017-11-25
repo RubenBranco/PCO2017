@@ -1,5 +1,8 @@
 package fcul.pco.dentalclinic.main;
 
+import fcul.pco.dentalclinic.domain.DoctorCatalog;
+import fcul.pco.dentalclinic.domain.PatientCatalog;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -25,4 +28,14 @@ public class App {
             ex.printStackTrace();
         }
     }
+
+    public static DoctorCatalog getDoctorCatalog(){
+        return DoctorCatalog.getInstance();
+    }
+
+    public static PatientCatalog getPatientCatalog() {
+        return PatientCatalog.getInstance();
+    }
+
+
 }

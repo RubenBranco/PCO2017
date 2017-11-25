@@ -17,8 +17,7 @@ public class AgendaPersistence {
     public static void save(Doctor d) throws IOException {
         Agenda a = d.getAgenda();
         FileWriter saveFile = new FileWriter(ApplicationConfiguration.ROOT_DIRECTORY + d.getId());
-        List<Appointment> appointments = a.getAppointments();
-        for (Appointment apt : appointments) {
+        for (Appointment apt : a) {
             saveFile.write(apt.toString() + "\n");
         }
         saveFile.close();
