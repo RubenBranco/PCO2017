@@ -30,14 +30,13 @@ public class PatientCatalog {
     public static Map<Integer, Patient> load() {
         Map<Integer, Patient> patients = new TreeMap<>();
         try (Scanner br = new Scanner(new FileReader(ApplicationConfiguration.ROOT_DIRECTORY
-                + "/"
                 + ApplicationConfiguration.PATIENT_CATALOG_FILENAME))) {
             while (br.hasNextLine()) {
-                Patient p = Patient.fromString(br.nextLine());
+                Patient p = Patient.fromString(br.nextLine().replace("\n", ""));
                 patients.put(p.getId(), p);
             }
         } catch (FileNotFoundException ex) {
-            // if the file is not found return the empty catalog.
+            return patients;
         }
         return patients;
     }

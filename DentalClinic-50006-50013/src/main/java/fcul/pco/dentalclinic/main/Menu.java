@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
 
-import fcul.pco.dentalclinic.domain.Agenda;
-import fcul.pco.dentalclinic.domain.Appointment;
-import fcul.pco.dentalclinic.domain.Date;
-import fcul.pco.dentalclinic.domain.Doctor;
-import fcul.pco.dentalclinic.domain.Patient;
+import fcul.pco.dentalclinic.domain.*;
+
 import java.util.List;
 
 /**
@@ -27,11 +24,29 @@ public class Menu {
      * @return
      * @throws IOException
      */
+    static DoctorCatalog doctorCatalog;
+    static PatientCatalog patientCatalog;
 
     public static void main(String[] args) throws IOException {
+        initialize();
         interactiveMode();
+        //App.executeAllUseCases();
     }
-
+    private static void initialize() {
+        patientCatalog = PatientCatalog.getInstance();
+        doctorCatalog = DoctorCatalog.getInstance();
+        try {
+            doctorCatalog.load();
+        }
+        catch (IOException ex) {
+            System.err.println("Error loading DoctorCatalog.");
+        }
+        try {
+            patientCatalog.load();
+        } catch (IOException ex){
+            System.err.println("Error loading PatientCatalog");
+        }
+    }
     private static void interactiveMode() throws IOException {
         try (Scanner in = new Scanner(System.in)) {
             in.useLocale(Locale.US);

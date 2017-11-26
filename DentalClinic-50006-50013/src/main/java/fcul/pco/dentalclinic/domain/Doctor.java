@@ -13,8 +13,7 @@ public class Doctor extends Person{
     }
 
     public static Doctor fromString(String s) {
-        int doctorId = Integer.parseInt(s.split(",")[0]);
-        String doctorName = s.split(",")[1];
-        return new Doctor(doctorName, doctorId, new Agenda());
+        String[] doctor = s.split(",");
+        return new Doctor(doctor[1], Integer.parseInt(doctor[0]), new Agenda());
     }
 }

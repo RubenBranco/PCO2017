@@ -6,7 +6,7 @@ public class Patient extends Person{
     }
 
     public static Patient fromString(String s) {
-        String[] patient = s.split("%");
+        String[] patient = s.split(",");
         return new Patient(patient[1], Integer.parseInt(patient[0]));
     }
 }

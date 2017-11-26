@@ -21,13 +21,15 @@ public class DoctorCatalog {
 
     public static Map<Integer, Doctor> load() throws FileNotFoundException {
         TreeMap<Integer, Doctor> doctors = new TreeMap<>();
-        Scanner saveFile = new Scanner(new File(ApplicationConfiguration.ROOT_DIRECTORY + ApplicationConfiguration.DOCTOR_CATALOG_FILENAME));
-        while (saveFile.hasNextLine()) {
-            String line = saveFile.nextLine().replaceAll("\n", "");
-            Doctor doctor = Doctor.fromString(line);
-            doctors.put(doctor.getId(), doctor);
+        try (Scanner saveFile = new Scanner(new File(ApplicationConfiguration.ROOT_DIRECTORY + ApplicationConfiguration.DOCTOR_CATALOG_FILENAME))){
+            while (saveFile.hasNextLine()) {
+                String line = saveFile.nextLine().replaceAll("\n", "");
+                Doctor doctor = Doctor.fromString(line);
+                doctors.put(doctor.getId(), doctor);
+            }
+        } catch (FileNotFoundException ex) {
+            return doctors;
         }
-        saveFile.close();
         return doctors;
     }
 

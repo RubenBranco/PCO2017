@@ -1,5 +1,7 @@
 package fcul.pco.dentalclinic.domain;
 
+import fcul.pco.dentalclinic.main.App;
+
 public class Appointment {
 	private Date date;
 	private String description;

@@ -1,5 +1,7 @@
 package fcul.pco.dentalclinic.domain;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -34,6 +36,18 @@ public class PatientCatalog {
      */
     public void save() throws IOException {
         fcul.pco.dentalclinic.persistence.PatientCatalog.save(patientCatalog);
+    }
+
+    @Override
+    public String toString() {
+        List<List<String>> table = new ArrayList<>();
+        for (Patient p : patientCatalog.values()) {
+            ArrayList<String> row = new ArrayList<>();
+            row.add(String.valueOf(p.getId()));
+            row.add(p.getName());
+            table.add(row);
+        }
+        return Utils.tableToString(table);
     }
 
     /**
