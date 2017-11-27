@@ -29,7 +29,7 @@ public class App {
         }
     }
 
-    public static DoctorCatalog getDoctorCatalog(){
+    public static DoctorCatalog getDoctorCatalog() {
         return DoctorCatalog.getInstance();
     }
 

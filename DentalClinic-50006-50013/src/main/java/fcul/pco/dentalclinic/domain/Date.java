@@ -186,14 +186,34 @@ public class Date {
 		return smartDateList;
 	}
 
-	public boolean equals(Date other) {
-		return this.day == other.getDay() && this.month == other.getMonth() && this.year == other.getYear() &&
-				this.minute == other.getMinute() && this.hour == other.getHour();
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Date)) return false;
+
+		Date date = (Date) o;
+
+		if (getHour() != date.getHour()) return false;
+		if (getMinute() != date.getMinute()) return false;
+		if (getDay() != date.getDay()) return false;
+		if (getMonth() != date.getMonth()) return false;
+		return getYear() == date.getYear();
 	}
+	@Override
+	public int hashCode() {
+		int result = getHour();
+		result = 31 * result + getMinute();
+		result = 31 * result + getDay();
+		result = 31 * result + getMonth();
+		result = 31 * result + getYear();
+		return result;
+	}
+
 	public static Date getTomorrowMorning() {
 		Date currentDate = Date.getCurrentDate();
 		return new Date(9, 0, currentDate.getDay() + 1, currentDate.getMonth(), currentDate.getYear());
 	}
+
 	public static Date fromString(String s){
 		String[] dmYear = s.split("/");
 		String[] hourMinute = s.split("@");
