@@ -94,7 +94,7 @@ public class Date {
 		return 364;
 	}
 	
-	private int intValue() {
+	public int intValue() {
 		int value = minute;
 		value += hour * 60;
 		value += (day - 1) * 1440;
@@ -137,7 +137,7 @@ public class Date {
 
 	@Override
 	public String toString() {
-		return String.format("%s/%s/%s@%d:%d", day, month, year, hour, minute);
+		return String.format("%s/%s/%s@%d:%d", year, month, day, hour, minute);
 	}
 
 	public static Date incrementDate(Date d, int minutes) {
@@ -168,7 +168,7 @@ public class Date {
 
 	public static Date getCurrentDate() {
 		LocalDateTime now = LocalDateTime.now();
-		return new Date(now.getYear(), now.getMonthValue(), now.getDayOfMonth(), now.getHour(), now.getMinute());
+		return new Date(now.getHour(), now.getMinute(), now.getDayOfMonth(), now.getMonthValue(), now.getYear());
 	}
 
 	public List<Date> makeSmartDateList(int every, List<Date> exclude) {
@@ -218,11 +218,18 @@ public class Date {
 		String[] dmYear = s.split("/");
 		String[] hourMinute = s.split("@");
 		return new Date(Integer.parseInt(hourMinute[1].split(":")[0]),
-				Integer.parseInt(hourMinute[1].split(":")[1]), Integer.parseInt(dmYear[0])
-				, Integer.parseInt(dmYear[1]), Integer.parseInt(dmYear[2].split("@")[0]));
+				Integer.parseInt(hourMinute[1].split(":")[1]), Integer.parseInt(dmYear[2].split("@")[0])
+				, Integer.parseInt(dmYear[1]), Integer.parseInt(dmYear[0]));
 	}
 
 	public static String dateListToString(List<Date> list) {
-		return "Test";
+		List<List<String>> dateList = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			List<String> oneDateList = new ArrayList<>();
+			oneDateList.add(String.format("%d", i+1));
+			oneDateList.add(list.get(i).toString());
+			dateList.add(oneDateList);
+		}
+		return Utils.tableToString(dateList);
 	}
 }

@@ -2,12 +2,15 @@ package fcul.pco.dentalclinic.domain;
 
 import fcul.pco.dentalclinic.main.App;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class implements an appointment
  *
  * @author João Regueira, Ruben Branco
  */
-public class Appointment {
+public class Appointment implements Comparable<Appointment> {
 	private Date date;
 	private String description;
 	private int duration;
@@ -73,4 +76,19 @@ public class Appointment {
 	    String[] apt = s.split("$");
 	    return new Appointment(Date.fromString(apt[0]), apt[2], Integer.parseInt(apt[1]), Patient.fromString(apt[3]));
     }
+
+	public List<String> toRow() {
+		List<String> row = new ArrayList<>();
+		row.add(date.toString());
+		row.add(patient.getName());
+		row.add(description);
+		return row;
+	}
+
+	@Override
+	public int compareTo(Appointment o) {
+		Date thisDate = this.getDate();
+		Date otherDate = o.getDate();
+		return thisDate.intValue() - otherDate.intValue();
+	}
 }

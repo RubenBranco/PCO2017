@@ -5,6 +5,7 @@ import fcul.pco.dentalclinic.persistence.AgendaPersistence;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -61,13 +62,24 @@ public class Agenda implements Iterable<Appointment>{
         return AgendaPersistence.load(d);
     }
 
+    public List<Appointment> getDayAppointments(Date d){
+        List<Appointment> dayAppointments = new ArrayList<>();
+        for (Appointment apt : agenda) {
+            Date aptDate = apt.getDate();
+            if (aptDate.getDay() == d.getDay() && aptDate.getMonth() == d.getMonth() && aptDate.getYear() == d.getYear()){
+                dayAppointments.add(apt);
+            }
+        }
+        Collections.sort(dayAppointments);
+        return dayAppointments;
+    }
+
     /**
      * This method returns a list of appointments after the date from
      *
      * @param from is a Date object
      * @return a List of Date
      */
-
     public List<Date> getNextAppointmentDates(Date from) {
         List<Date> aptList = new ArrayList<>();
         for (Appointment apt : agenda) {
