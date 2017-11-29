@@ -62,6 +62,12 @@ public class Agenda implements Iterable<Appointment>{
         return AgendaPersistence.load(d);
     }
 
+    /**
+     * Gets the appointments for a given date
+     *
+     * @param d is a Date object
+     * @return a list of appointments
+     */
     public List<Appointment> getDayAppointments(Date d){
         List<Appointment> dayAppointments = new ArrayList<>();
         for (Appointment apt : agenda) {
@@ -84,8 +90,7 @@ public class Agenda implements Iterable<Appointment>{
         List<Date> aptList = new ArrayList<>();
         for (Appointment apt : agenda) {
             Date aptDate = apt.getDate();
-            if (aptDate.getYear() >= from.getYear() && aptDate.getMonth() >= from.getMonth() && aptDate.getDay() >=
-                    from.getDay() && aptDate.getHour() >= from.getHour() && aptDate.getMinute() > from.getMinute()){
+            if (aptDate.minutesSinceStartDate() > from.minutesSinceStartDate()) {
                 aptList.add(aptDate);
             }
         }

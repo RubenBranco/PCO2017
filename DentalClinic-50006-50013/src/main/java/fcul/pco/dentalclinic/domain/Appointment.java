@@ -72,11 +72,22 @@ public class Appointment implements Comparable<Appointment> {
 		return date + "$" + duration + "$" + description + "$" + patient;
 	}
 
+	/**
+	 * Builds an appointment object from a string
+	 *
+	 * @param s is a string with a format: date$duration$description$patient
+	 * @return an appointment object
+	 */
 	public static Appointment fromString(String s) {
-	    String[] apt = s.split("$");
+	    String[] apt = s.split("\\$");
 	    return new Appointment(Date.fromString(apt[0]), apt[2], Integer.parseInt(apt[1]), Patient.fromString(apt[3]));
     }
 
+	/**
+	 * Creates a list of strings of appointment variables as a row.
+	 *
+	 * @return a list of strings
+	 */
 	public List<String> toRow() {
 		List<String> row = new ArrayList<>();
 		row.add(date.toString());
@@ -85,10 +96,16 @@ public class Appointment implements Comparable<Appointment> {
 		return row;
 	}
 
+	/**
+	 * Compares (subtraction) the instances date with another appointments date
+	 *
+	 * @param o is an appointment object
+	 * @return an int
+	 */
 	@Override
 	public int compareTo(Appointment o) {
 		Date thisDate = this.getDate();
 		Date otherDate = o.getDate();
-		return thisDate.intValue() - otherDate.intValue();
+		return thisDate.minutesSinceStartDate() - otherDate.minutesSinceStartDate();
 	}
 }

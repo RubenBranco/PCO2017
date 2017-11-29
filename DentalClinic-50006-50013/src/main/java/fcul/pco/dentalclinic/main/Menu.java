@@ -196,7 +196,22 @@ public class Menu {
     }
 
     private static void weekAgenda(Doctor doc) {
-        // not implemented yet.
+        Date today = Date.getCurrentDate();
+        int dayOfWeek = today.dayOfWeek();
+        Date day;
+        if (today.getDay() - dayOfWeek < 1) {
+            int year = today.getMonth() - 1 > 0 ? today.getYear() : today.getYear() - 1;
+            int month = today.getMonth() - 1 > 0 ? today.getMonth() : 12;
+            day = new Date(0, 0, Date.daysInMonth(month, year) - (dayOfWeek - today.getDay()), month, year);
+        }
+        else {
+            day = new Date(0, 0, today.getDay() - dayOfWeek, today.getMonth(), today.getYear());
+        }
+        for (int i = 0; i < 7; i++) {
+            System.out.println(Date.dayOfWeekDesignation(i));
+            dayAgenda(doc, day);
+            day = Date.incrementDate(day, 24*60);
+        }
     }
 
     /**

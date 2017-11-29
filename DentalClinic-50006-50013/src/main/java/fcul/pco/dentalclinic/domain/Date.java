@@ -4,6 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class implements an appointment
+ *
+ * @author João Regueira, Ruben Branco
+ */
+
 public class Date {
 	private int hour;
 	private int minute;
@@ -25,7 +31,21 @@ public class Date {
 	};
 	private static final Date STARTDATE = new Date(2000, 1, 1);
 	private static final int STARTDATEINT = STARTDATE.intValue();
-	
+
+	public static void main(String[] args) {
+		Date test = new Date(9,0,2,12,2017);
+		System.out.println(test.dayOfWeek());
+	}
+
+	/**
+	 * Public constructor for date
+	 *
+	 * @param hour is an int
+	 * @param minute is an int
+	 * @param day is an int
+	 * @param month is an int
+	 * @param year is an int
+	 */
 	public Date(int hour, int minute, int day, int month, int year) {
 		this.hour = hour;
 		this.minute = minute;
@@ -33,37 +53,80 @@ public class Date {
 		this.month = month;
 		this.year = year;
 	}
+
+	/**
+	 * Private constructor for yyyy/mm/dd
+	 *
+	 * @param year is an int
+	 * @param month is an int
+	 * @param day is an int
+	 */
 	private Date(int year, int month, int day) {
 		this.year = year;
 		this.month = month;
 		this.day = day;
 	}
-	
+
+	/**
+	 * Private constructor for mm/dd
+	 *
+	 * @param month is an int
+	 * @param day is an int
+	 */
 	private Date(int month, int day) {
 		this.month = month;
 		this.day = day;
 	}
-	
+
+	/**
+	 * Checks if the instance is the same date as the other
+	 *
+	 * @param other is a date object
+	 * @return Boolean(true or false)
+	 */
 	private boolean sameDay(Date other) {
 		return other.day == day && other.month == month;
 	}
-	
+
+	/**
+	 * Checks if the instance is before other.
+	 *
+	 * @param other is a date object
+	 * @return Boolean(true or false)
+	 */
 	public boolean isBefore(Date other) {
 		return this.year <= other.year && this.month <= other.month && this.day < other.day;
 	}
 
+	/**
+	 * Checks if the instance is an holiday.
+	 *
+	 * @return Boolean(true or false)
+	 */
 	public boolean isHoliday() {
 		for (int i = 0; i < HOLIDAYS.length; i++) {
 			if (this.sameDay(HOLIDAYS[i])) return true;
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Checks if year is a leap year
+	 *
+	 * @param year is an int
+	 * @return Boolean(true or false)
+	 */
 	private static boolean isLeapYear(int year) {
-		if(year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) return true;
-		return false;
+		return year % 400 == 0 || (year % 4 == 0) && (year % 100 != 0);
 	}
-	
+
+	/**
+	 * Checks how many days there is in the month
+	 *
+	 * @param month is an int
+	 * @param year is an int
+	 * @return an int being the number of days
+	 */
 	public static int daysInMonth(int month, int year) {
 		if (month == 2) {
 			if (Date.isLeapYear(year)) {
@@ -88,13 +151,24 @@ public class Date {
 			return 31;
 		}
 	}
-	
+
+	/**
+	 * Checks how many days there is in the given year
+	 *
+	 * @param year is an int
+	 * @return an int, being the number of days
+	 */
 	private static int daysInYear(int year) {
-		if (Date.isLeapYear(year)) return 365;
-		return 364;
+		if (Date.isLeapYear(year)) return 366;
+		return 365;
 	}
-	
-	public int intValue() {
+
+	/**
+	 * Calculates how many minutes have passed since a start date
+	 *
+	 * @return an int being the number of minutes since startdate
+	 */
+	private int intValue() {
 		int value = minute;
 		value += hour * 60;
 		value += (day - 1) * 1440;
@@ -107,14 +181,31 @@ public class Date {
 			return value - STARTDATEINT;
 	}
 
+	/**
+	 * How many days have passed since start date
+	 *
+	 * @return an int
+	 */
 	private int daysSinceStartDate() {
-		return this.intValue();
+		return (int) Math.round(this.intValue() / 1440.0);
 	}
-	
+
+	/**
+	 * Calculates the day of the week, from 0 to 6.
+	 *
+	 * @return an int
+	 */
 	public int dayOfWeek() {
-		return (5 + this.daysSinceStartDate() / 1440) % 7;
+		System.out.println(this.daysSinceStartDate());
+		System.out.println(this.intValue() / 1440.0);
+		return (5 + this.daysSinceStartDate()) % 7;
 	}
-	
+
+	/**
+	 *
+	 *
+	 * @return
+	 */
 	public int getMinute() {
 		return minute;
 	}
@@ -135,32 +226,43 @@ public class Date {
 		return year;
 	}
 
+	public int minutesSinceStartDate(){
+		return this.intValue();
+	}
+
 	@Override
 	public String toString() {
 		return String.format("%s/%s/%s@%d:%d", year, month, day, hour, minute);
 	}
 
 	public static Date incrementDate(Date d, int minutes) {
-		int minute = (d.getMinute() + minutes) % 60;
-		int hoursElapsed = (d.getMinute() + minutes) / 60;
-		int hour = (d.getHour() + hoursElapsed) % 24;
-		int daysElapsed = (d.getHour() + hoursElapsed) / 24;
+		int minute = d.getMinute();
+		int hour = d.getHour();
 		int day = d.getDay();
 		int month = d.getMonth();
 		int year = d.getYear();
-		while (daysElapsed > 0) {
-			if (daysElapsed + day > Date.daysInMonth(month, year)) {
-				if (month + 1 > 12) {
-					month = 1;
-					year++;
+		while (minutes > 0) {
+			if (minute + minutes > 59) {
+				minutes -= (60 - minute);
+				minute = 0;
+				hour++;
+				if (hour > 23) {
+					hour = 0;
+					if (day + 1 > Date.daysInMonth(month, year)) {
+						day = 1;
+						month++;
+						if (month > 12) {
+							month = 1;
+							year++;
+						}
+					}
+					else {
+						day++;
+					}
 				}
-				else {
-					month++;
-				}
-				daysElapsed -= day;
-			}
-			else {
-				day += daysElapsed;
+			} else {
+				minute += minutes;
+				minutes = 0;
 			}
 		}
 		return new Date(hour, minute, day, month, year);
@@ -178,7 +280,7 @@ public class Date {
 		while (smartDateList.size() < 10) {
 			currentDate = Date.incrementDate(currentDate, every);
 			if (!exclude.contains(currentDate) && !currentDate.isHoliday() && currentDate.dayOfWeek() != 5
-					&& currentDate.dayOfWeek() != 6 && currentDate.getHour() > 8 && currentDate.getHour() < 19 &&
+					&& currentDate.dayOfWeek() != 6 && currentDate.getHour() > 8 && currentDate.getHour() < 18 &&
 					currentDate.getHour() != 12 && currentDate.getHour() != 13) {
 				smartDateList.add(currentDate);
 			}
@@ -231,5 +333,17 @@ public class Date {
 			dateList.add(oneDateList);
 		}
 		return Utils.tableToString(dateList);
+	}
+
+	public static String dayOfWeekDesignation(int i) {
+		List<String> dayOfWeek = new ArrayList<>();
+		dayOfWeek.add("Segunda-Feira");
+		dayOfWeek.add("Terça-Feira");
+		dayOfWeek.add("Quarta-Feira");
+		dayOfWeek.add("Quinta-Feira");
+		dayOfWeek.add("Sexta-Feira");
+		dayOfWeek.add("Sábado");
+		dayOfWeek.add("Domingo");
+		return dayOfWeek.get(i);
 	}
 }

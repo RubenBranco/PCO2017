@@ -23,14 +23,17 @@ public class AgendaPersistence {
         saveFile.close();
     }
 
-    public static Agenda load(Doctor d) throws FileNotFoundException {
-        Scanner saveFile = new Scanner(new File(ApplicationConfiguration.ROOT_DIRECTORY + d.getId()));
+    public static Agenda load(Doctor d) throws FileNotFoundException{
         Agenda a = new Agenda();
-        while (saveFile.hasNextLine()){
-            String line = saveFile.nextLine().replace("\n","");
-            a.addAppointment(Appointment.fromString(line));
+        try (Scanner saveFile = new Scanner(new File(ApplicationConfiguration.ROOT_DIRECTORY + d.getId()))){
+            while (saveFile.hasNextLine()){
+                String line = saveFile.nextLine().replace("\n","");
+                a.addAppointment(Appointment.fromString(line));
+            }
         }
-        saveFile.close();
+        catch (FileNotFoundException ex) {
+            return a;
+        }
         return a;
     }
 }
