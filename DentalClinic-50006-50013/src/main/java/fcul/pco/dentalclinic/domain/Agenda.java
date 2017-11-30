@@ -90,7 +90,7 @@ public class Agenda implements Iterable<Appointment>{
         List<Date> aptList = new ArrayList<>();
         for (Appointment apt : agenda) {
             Date aptDate = apt.getDate();
-            if (aptDate.minutesSinceStartDate() > from.minutesSinceStartDate()) {
+            if (aptDate.compareTo(from) > 0) {
                 aptList.add(aptDate);
             }
         }

@@ -109,7 +109,7 @@ public class Menu {
         if (App.getDoctorCatalog().getDoctorById(id) != null) {
             System.out.println("O Doctor " + id + " já se econtra registado !");
         } else {
-            Doctor d = new Doctor(nome, id, new Agenda());
+            Doctor d = new Doctor(nome, id);
             App.getDoctorCatalog().addDoctor(d);
             App.getDoctorCatalog().save();
         }

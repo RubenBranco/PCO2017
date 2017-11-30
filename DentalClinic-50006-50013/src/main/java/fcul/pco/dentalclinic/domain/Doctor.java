@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 public class Doctor extends Person{
     private Agenda agenda;
 
-    public Doctor(String name, int id, Agenda agenda) throws FileNotFoundException {
+    public Doctor(String name, int id) throws FileNotFoundException {
         super(id, name);
         this.agenda = Agenda.load(this);
     }
@@ -16,6 +16,6 @@ public class Doctor extends Person{
 
     public static Doctor fromString(String s) throws FileNotFoundException {
         String[] doctor = s.split(",");
-        return new Doctor(doctor[1], Integer.parseInt(doctor[0]), new Agenda());
+        return new Doctor(doctor[1], Integer.parseInt(doctor[0]));
     }
 }

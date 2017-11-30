@@ -10,7 +10,7 @@ import java.util.List;
  * @author João Regueira, Ruben Branco
  */
 
-public class Date {
+public class Date implements Comparable<Date>{
 	private int hour;
 	private int minute;
 	private int day;
@@ -31,11 +31,6 @@ public class Date {
 	};
 	private static final Date STARTDATE = new Date(2000, 1, 1);
 	private static final int STARTDATEINT = STARTDATE.intValue();
-
-	public static void main(String[] args) {
-		Date test = new Date(9,0,2,12,2017);
-		System.out.println(test.dayOfWeek());
-	}
 
 	/**
 	 * Public constructor for date
@@ -95,7 +90,7 @@ public class Date {
 	 * @return Boolean(true or false)
 	 */
 	public boolean isBefore(Date other) {
-		return this.year <= other.year && this.month <= other.month && this.day < other.day;
+		return this.intValue() - other.intValue() < 0;
 	}
 
 	/**
@@ -128,27 +123,20 @@ public class Date {
 	 * @return an int being the number of days
 	 */
 	public static int daysInMonth(int month, int year) {
+		int[] thirtyOne = {1, 3, 5, 7, 8, 10, 12};
 		if (month == 2) {
 			if (Date.isLeapYear(year)) {
-				return 28;
+				return 29;
 			} else {
-				return 27;
+				return 28;
 			} 
-		}
-		else if (month < 8 && month % 2 == 0) {
+		} else {
+			for (int m : thirtyOne) {
+				if (m == month) {
+					return 31;
+				}
+			}
 			return 30;
-		}
-		else if (month < 8 && month % 2 != 0) {
-			return 31;
-		}
-		else if (month > 8 && month % 2 == 0) {
-			return 31;
-		}
-		else if (month > 8 && month % 2 != 0) {
-			return 30;
-		}
-		else {
-			return 31;
 		}
 	}
 
@@ -178,7 +166,7 @@ public class Date {
 		for (int y = STARTDATE.year; y < year; y++) {
 			value += daysInYear(y) * 1440;
 		}
-			return value - STARTDATEINT;
+		return value - STARTDATEINT;
 	}
 
 	/**
@@ -187,7 +175,8 @@ public class Date {
 	 * @return an int
 	 */
 	private int daysSinceStartDate() {
-		return (int) Math.round(this.intValue() / 1440.0);
+		Date cacheDate = new Date(0, 0, this.getDay(), this.getMonth(), this.getYear());
+		return cacheDate.intValue() / 1440;
 	}
 
 	/**
@@ -196,45 +185,71 @@ public class Date {
 	 * @return an int
 	 */
 	public int dayOfWeek() {
-		System.out.println(this.daysSinceStartDate());
-		System.out.println(this.intValue() / 1440.0);
 		return (5 + this.daysSinceStartDate()) % 7;
 	}
 
 	/**
+	 * Gets the minutes in the Date instance
 	 *
-	 *
-	 * @return
+	 * @return an int
 	 */
 	public int getMinute() {
 		return minute;
 	}
-	
+
+	/**
+	 * Gets the hour in the Date instance
+	 *
+	 * @return an int
+	 */
 	public int getHour() {
 		return hour;
 	}
-	
+
+	/**
+	 * Gets the day in the Date instance
+	 *
+	 * @return an int
+	 */
 	public int getDay() {
 		return day;
 	}
-	
+
+	/**
+	 * Gets the month in the Date instance
+	 *
+	 * @return an int
+	 */
 	public int getMonth() {
 		return month;
 	}
-	
+
+	/**
+	 * Gets the year in the Date instance
+	 *
+	 * @return an int
+	 */
 	public int getYear() {
 		return year;
 	}
 
-	public int minutesSinceStartDate(){
-		return this.intValue();
-	}
-
+	/**
+	 * Turns the Date instance into a string
+	 *
+	 * @return a string
+	 */
 	@Override
 	public String toString() {
 		return String.format("%s/%s/%s@%d:%d", year, month, day, hour, minute);
 	}
 
+	/**
+	 * Increments a date object by n minutes
+	 *
+	 * @param d is date object
+	 * @param minutes is an int
+	 * @return a Date object
+	 */
 	public static Date incrementDate(Date d, int minutes) {
 		int minute = d.getMinute();
 		int hour = d.getHour();
@@ -268,26 +283,44 @@ public class Date {
 		return new Date(hour, minute, day, month, year);
 	}
 
+	/**
+	 * Returns a Date object of the current date
+	 *
+	 * @return a Date object
+	 */
 	public static Date getCurrentDate() {
 		LocalDateTime now = LocalDateTime.now();
 		return new Date(now.getHour(), now.getMinute(), now.getDayOfMonth(), now.getMonthValue(), now.getYear());
 	}
 
+	/**
+	 * Returns a list of 10 Date objects with an interval of every minutes, if the generated Date is not in exclude
+	 * or isn't a holiday, saturday and sunday
+	 *
+	 * @param every is an int
+	 * @param exclude is a List of Date objects
+	 * @return A List of Date objects
+	 */
 	public List<Date> makeSmartDateList(int every, List<Date> exclude) {
 		List<Date> smartDateList = new ArrayList<>();
-		smartDateList.add(this);
 		Date currentDate = this;
 		while (smartDateList.size() < 10) {
-			currentDate = Date.incrementDate(currentDate, every);
 			if (!exclude.contains(currentDate) && !currentDate.isHoliday() && currentDate.dayOfWeek() != 5
 					&& currentDate.dayOfWeek() != 6 && currentDate.getHour() > 8 && currentDate.getHour() < 18 &&
 					currentDate.getHour() != 12 && currentDate.getHour() != 13) {
 				smartDateList.add(currentDate);
 			}
+			currentDate = Date.incrementDate(currentDate, every);
 		}
 		return smartDateList;
 	}
 
+	/**
+	 *
+	 *
+	 * @param o
+	 * @return
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -313,7 +346,18 @@ public class Date {
 
 	public static Date getTomorrowMorning() {
 		Date currentDate = Date.getCurrentDate();
-		return new Date(9, 0, currentDate.getDay() + 1, currentDate.getMonth(), currentDate.getYear());
+		int month = currentDate.getMonth();
+		int year = currentDate.getYear();
+		int day = currentDate.getDay() + 1;
+		if (day > Date.daysInMonth(month, year)) {
+			day = 1;
+			month++;
+			if (month > 12) {
+				month = 1;
+				year++;
+			}
+		}
+		return new Date(9, 0, day, month, year);
 	}
 
 	public static Date fromString(String s){
@@ -345,5 +389,49 @@ public class Date {
 		dayOfWeek.add("Sábado");
 		dayOfWeek.add("Domingo");
 		return dayOfWeek.get(i);
+	}
+
+	/**
+	 * Compares this object with the specified object for order.  Returns a
+	 * negative integer, zero, or a positive integer as this object is less
+	 * than, equal to, or greater than the specified object.
+	 * <p>
+	 * <p>The implementor must ensure
+	 * {@code sgn(x.compareTo(y)) == -sgn(y.compareTo(x))}
+	 * for all {@code x} and {@code y}.  (This
+	 * implies that {@code x.compareTo(y)} must throw an exception iff
+	 * {@code y.compareTo(x)} throws an exception.)
+	 * <p>
+	 * <p>The implementor must also ensure that the relation is transitive:
+	 * {@code (x.compareTo(y) > 0 && y.compareTo(z) > 0)} implies
+	 * {@code x.compareTo(z) > 0}.
+	 * <p>
+	 * <p>Finally, the implementor must ensure that {@code x.compareTo(y)==0}
+	 * implies that {@code sgn(x.compareTo(z)) == sgn(y.compareTo(z))}, for
+	 * all {@code z}.
+	 * <p>
+	 * <p>It is strongly recommended, but <i>not</i> strictly required that
+	 * {@code (x.compareTo(y)==0) == (x.equals(y))}.  Generally speaking, any
+	 * class that implements the {@code Comparable} interface and violates
+	 * this condition should clearly indicate this fact.  The recommended
+	 * language is "Note: this class has a natural ordering that is
+	 * inconsistent with equals."
+	 * <p>
+	 * <p>In the foregoing description, the notation
+	 * {@code sgn(}<i>expression</i>{@code )} designates the mathematical
+	 * <i>signum</i> function, which is defined to return one of {@code -1},
+	 * {@code 0}, or {@code 1} according to whether the value of
+	 * <i>expression</i> is negative, zero, or positive, respectively.
+	 *
+	 * @param o the object to be compared.
+	 * @return a negative integer, zero, or a positive integer as this object
+	 * is less than, equal to, or greater than the specified object.
+	 * @throws NullPointerException if the specified object is null
+	 * @throws ClassCastException   if the specified object's type prevents it
+	 *                              from being compared to this object.
+	 */
+	@Override
+	public int compareTo(Date o) {
+		return this.intValue() - o.intValue();
 	}
 }

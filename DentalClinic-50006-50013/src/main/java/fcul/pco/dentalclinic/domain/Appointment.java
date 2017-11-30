@@ -106,6 +106,6 @@ public class Appointment implements Comparable<Appointment> {
 	public int compareTo(Appointment o) {
 		Date thisDate = this.getDate();
 		Date otherDate = o.getDate();
-		return thisDate.minutesSinceStartDate() - otherDate.minutesSinceStartDate();
+		return thisDate.compareTo(otherDate);
 	}
 }
