@@ -107,7 +107,7 @@ public class Menu {
         System.out.println("ID: ");
         int id = nextInt(in);
         if (App.getDoctorCatalog().getDoctorById(id) != null) {
-            System.out.println("O Doctor " + id + " já se econtra registado !");
+            System.out.println("O Doctor " + id + " já se encontra registado !");
         } else {
             Doctor d = new Doctor(nome, id);
             App.getDoctorCatalog().addDoctor(d);
@@ -201,7 +201,7 @@ public class Menu {
         Date day;
         if (today.getDay() - dayOfWeek < 1) {
             int year = today.getMonth() - 1 > 0 ? today.getYear() : today.getYear() - 1;
-            int month = today.getMonth() - 1 > 0 ? today.getMonth() : 12;
+            int month = today.getMonth() - 1 > 0 ? today.getMonth() - 1 : 12;
             day = new Date(0, 0, Date.daysInMonth(month, year) - (dayOfWeek - today.getDay()), month, year);
         }
         else {
@@ -251,7 +251,7 @@ public class Menu {
         System.out.println("Número SNS: ");
         int id = nextInt(in);
         if (App.getPatientCatalog().getPatientById(id) != null) {
-            System.out.println("O paciente " + id + " já se econtra registado !");
+            System.out.println("O paciente " + id + " já se encontra registado !");
         } else {
             Patient d = new Patient(name, id);
             App.getPatientCatalog().addPatient(d);
