@@ -33,10 +33,21 @@ public class DoctorCatalog {
         return Utils.tableToString(table);
     }
 
+    /**
+     * Adds a doctor to the DoctorCatalog
+     *
+     * @param d is a Doctor object
+     */
     public void addDoctor(Doctor d) {
         doctorCatalog.put(d.getId(), d);
     }
 
+    /**
+     *
+     *
+     * @param id
+     * @return
+     */
     public Doctor getDoctorById(int id) {
         return doctorCatalog.get(id);
     }

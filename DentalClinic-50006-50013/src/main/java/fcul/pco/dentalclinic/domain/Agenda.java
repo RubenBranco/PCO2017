@@ -17,7 +17,6 @@ import java.util.List;
 public class Agenda implements Iterable<Appointment>{
     private List<Appointment> agenda;
 
-
     public Agenda() {
         agenda = new ArrayList<>();
     }

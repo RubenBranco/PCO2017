@@ -316,10 +316,10 @@ public class Date implements Comparable<Date>{
 	}
 
 	/**
+	 * Evaluates the equality of the instance and another object.
 	 *
-	 *
-	 * @param o
-	 * @return
+	 * @param o is an Object
+	 * @return true or false
 	 */
 	@Override
 	public boolean equals(Object o) {
@@ -334,6 +334,12 @@ public class Date implements Comparable<Date>{
 		if (getMonth() != date.getMonth()) return false;
 		return getYear() == date.getYear();
 	}
+
+	/**
+	 * hash code of the the date object
+	 *
+	 * @return an int
+	 */
 	@Override
 	public int hashCode() {
 		int result = getHour();
@@ -344,6 +350,11 @@ public class Date implements Comparable<Date>{
 		return result;
 	}
 
+	/**
+	 * Increments the date by a day.
+	 *
+	 * @return a Date object
+	 */
 	public static Date getTomorrowMorning() {
 		Date currentDate = Date.getCurrentDate();
 		int month = currentDate.getMonth();
@@ -360,6 +371,12 @@ public class Date implements Comparable<Date>{
 		return new Date(9, 0, day, month, year);
 	}
 
+	/**
+	 * Creates a Date object from a string with the format yyyy/mm/dd@hh:mm
+	 *
+	 * @param s is a String
+	 * @return a Date object
+	 */
 	public static Date fromString(String s){
 		String[] dmYear = s.split("/");
 		String[] hourMinute = s.split("@");
@@ -368,6 +385,12 @@ public class Date implements Comparable<Date>{
 				, Integer.parseInt(dmYear[1]), Integer.parseInt(dmYear[0]));
 	}
 
+	/**
+	 * Creates a String to be displayed from a list of Date objects
+	 *
+	 * @param list is a List of Date objects
+	 * @return a String
+	 */
 	public static String dateListToString(List<Date> list) {
 		List<List<String>> dateList = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
@@ -379,6 +402,12 @@ public class Date implements Comparable<Date>{
 		return Utils.tableToString(dateList);
 	}
 
+	/**
+	 * Retrieves the designation of the day of the week
+	 *
+	 * @param i is an int, from 0 to 6
+	 * @return a String
+	 */
 	public static String dayOfWeekDesignation(int i) {
 		List<String> dayOfWeek = new ArrayList<>();
 		dayOfWeek.add("Segunda-Feira");
