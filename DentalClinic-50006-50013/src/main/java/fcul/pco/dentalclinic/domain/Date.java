@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class implements an appointment
+ * This class implements a way to create and manipulate dates
  *
  * @author João Regueira, Ruben Branco
  */

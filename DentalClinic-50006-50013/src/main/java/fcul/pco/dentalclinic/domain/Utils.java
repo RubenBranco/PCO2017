@@ -3,11 +3,18 @@ package fcul.pco.dentalclinic.domain;
 import java.util.List;
 
 /**
+ * This class implements utilities needed for an interface with the user
  *
  * @author tl
  */
 public class Utils {
 
+    /**
+     * Formats a table around strings to be displayed to the user
+     *
+     * @param table is a
+     * @return
+     */
     public static String tableToString(List<List<String>> table) {
         int[] columnsWidth = new int[table.get(0).size()];
         for (int j = 0; j < columnsWidth.length; j++) {

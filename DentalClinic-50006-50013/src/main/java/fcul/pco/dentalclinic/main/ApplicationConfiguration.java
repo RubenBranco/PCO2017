@@ -1,6 +1,7 @@
 package fcul.pco.dentalclinic.main;
 
 /**
+ * This class holds variables for the configuration of the app
  *
  * @author tl
  */

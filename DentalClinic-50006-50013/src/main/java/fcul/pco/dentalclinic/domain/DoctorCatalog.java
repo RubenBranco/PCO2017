@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * This class implements a catalog with doctors in order to access their information by having a list
+ *
+ * @author João Regueira, Ruben Branco
+ */
+
 public class DoctorCatalog {
 
     private Map<Integer, Doctor> doctorCatalog;
@@ -14,6 +20,11 @@ public class DoctorCatalog {
         doctorCatalog = new TreeMap<>();
     }
 
+    /**
+     * Gets the simpleton instance of a doctor catalog
+     *
+     * @return a DoctorCatalog object
+     */
     public static DoctorCatalog getInstance() {
         if (instance == null) {
             instance = new DoctorCatalog();
@@ -21,6 +32,11 @@ public class DoctorCatalog {
         return instance;
     }
 
+    /**
+     * Formats a catalog into a String to be displayed to the user
+     *
+     * @return a String
+     */
     @Override
     public String toString() {
         List<List<String>> table = new ArrayList<>();
@@ -43,10 +59,10 @@ public class DoctorCatalog {
     }
 
     /**
+     * Gets a Doctor from the catalog using his id
      *
-     *
-     * @param id
-     * @return
+     * @param id is an int
+     * @return a Doctor object
      */
     public Doctor getDoctorById(int id) {
         return doctorCatalog.get(id);

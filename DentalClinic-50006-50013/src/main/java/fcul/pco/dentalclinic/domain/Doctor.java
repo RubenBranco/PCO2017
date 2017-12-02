@@ -2,6 +2,12 @@ package fcul.pco.dentalclinic.domain;
 
 import java.io.FileNotFoundException;
 
+/**
+ * This class implements doctors for the clinic
+ *
+ * @author João Regueira, Ruben Branco
+ */
+
 public class Doctor extends Person{
     private Agenda agenda;
 

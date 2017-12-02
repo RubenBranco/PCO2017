@@ -13,7 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This class implements save and load methods for an Agenda
+ *
+ * @author João Regueira, Ruben Branco
+ */
+
 public class AgendaPersistence {
+
+    /**
+     * Saves a Doctor Agenda into a configuration save file
+     *
+     * @param d is a Doctor
+     * @throws IOException
+     */
     public static void save(Doctor d) throws IOException {
         Agenda a = d.getAgenda();
         FileWriter saveFile = new FileWriter(ApplicationConfiguration.ROOT_DIRECTORY + d.getId());
@@ -23,6 +36,13 @@ public class AgendaPersistence {
         saveFile.close();
     }
 
+    /**
+     * Loads a Doctor Agenda from a configuration save file
+     *
+     * @param d is a Doctor
+     * @return an Agenda object
+     * @throws FileNotFoundException
+     */
     public static Agenda load(Doctor d) throws FileNotFoundException{
         Agenda a = new Agenda();
         try (Scanner saveFile = new Scanner(new File(ApplicationConfiguration.ROOT_DIRECTORY + d.getId()))){

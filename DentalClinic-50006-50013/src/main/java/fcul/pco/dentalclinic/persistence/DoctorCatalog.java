@@ -9,8 +9,20 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+/**
+ * This class implements save and load methods for a DoctorCatalog
+ *
+ * @author João Regueira, Ruben Branco
+ */
+
 public class DoctorCatalog {
 
+    /**
+     * Saves Doctors from a Map into a configuration save file
+     *
+     * @param doctors is a Map of Doctors
+     * @throws IOException
+     */
     public static void save(Map<Integer, Doctor> doctors) throws IOException {
         FileWriter saveFile = new FileWriter(ApplicationConfiguration.ROOT_DIRECTORY + ApplicationConfiguration.DOCTOR_CATALOG_FILENAME);
         for (Doctor d : doctors.values()) {
@@ -19,6 +31,12 @@ public class DoctorCatalog {
         saveFile.close();
     }
 
+    /**
+     * Loads a DoctorCatalog from configuration save file
+     *
+     * @return a Map of Doctors
+     * @throws FileNotFoundException
+     */
     public static Map<Integer, Doctor> load() throws FileNotFoundException {
         TreeMap<Integer, Doctor> doctors = new TreeMap<>();
         try (Scanner saveFile = new Scanner(new File(ApplicationConfiguration.ROOT_DIRECTORY + ApplicationConfiguration.DOCTOR_CATALOG_FILENAME))){
