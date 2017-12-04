@@ -46,7 +46,8 @@ public class DoctorCatalog {
             row.add(d.getName());
             table.add(row);
         }
-        return Utils.tableToString(table);
+        if (table.size() > 0) return Utils.tableToString(table);
+        else return "Não existe médicos registados";
     }
 
     /**
@@ -80,9 +81,8 @@ public class DoctorCatalog {
     /**
      * Loads a catalog from a file and returns a catalog instance.
      *
-     * @throws IOException
      */
-    public void load() throws IOException {
+    public void load() {
         doctorCatalog = fcul.pco.dentalclinic.persistence.DoctorCatalog.load();
     }
 

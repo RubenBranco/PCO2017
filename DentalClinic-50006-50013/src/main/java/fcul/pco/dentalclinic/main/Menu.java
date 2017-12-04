@@ -26,17 +26,8 @@ public class Menu {
     private static void initialize() {
         patientCatalog = PatientCatalog.getInstance();
         doctorCatalog = DoctorCatalog.getInstance();
-        try {
-            doctorCatalog.load();
-        }
-        catch (IOException ex) {
-            System.err.println("Error loading DoctorCatalog.");
-        }
-        try {
-            patientCatalog.load();
-        } catch (IOException ex){
-            System.err.println("Error loading PatientCatalog");
-        }
+        doctorCatalog.load();
+        patientCatalog.load();
     }
     private static void interactiveMode() throws IOException {
         try (Scanner in = new Scanner(System.in)) {

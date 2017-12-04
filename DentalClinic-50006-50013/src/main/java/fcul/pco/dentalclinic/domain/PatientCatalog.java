@@ -75,15 +75,15 @@ public class PatientCatalog {
             row.add(p.getName());
             table.add(row);
         }
-        return Utils.tableToString(table);
+        if (table.size() > 0) return Utils.tableToString(table);
+        else return "Não existe pacientes registados";
     }
 
     /**
      * Loads a catalog from a file and returns a catalog instance.
      *
-     * @throws IOException
      */
-    public void load() throws IOException {
+    public void load() {
         patientCatalog = fcul.pco.dentalclinic.persistence.PatientCatalog.load();
     }
 

@@ -37,7 +37,7 @@ public class DoctorCatalog {
      * @return a Map of Doctors
      * @throws FileNotFoundException
      */
-    public static Map<Integer, Doctor> load() throws FileNotFoundException {
+    public static Map<Integer, Doctor> load() {
         TreeMap<Integer, Doctor> doctors = new TreeMap<>();
         try (Scanner saveFile = new Scanner(new File(ApplicationConfiguration.ROOT_DIRECTORY + ApplicationConfiguration.DOCTOR_CATALOG_FILENAME))){
             while (saveFile.hasNextLine()) {
